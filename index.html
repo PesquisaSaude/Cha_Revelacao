@@ -8,7 +8,7 @@
   <title>Chá Rifa Revelação — O Bebê Agora é Outro!</title>
 
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-  <script type="text/javascript" src="https://gc.kes.v2.scr.kaspersky-labs.com/7EA5E9BB-55E1-4C31-9C21-4943DDFED2E4/main.js?attr=l3lodg-DkFypP3r4tQnox5xhIJCf99qefy-uH4-Ea6nv8Gi92prHB7r42tHK-0p00nQ6DW_vvO61F1wj3-Tixy048Tx_PIY0hNhth3A5QHzh6m6nDdj10foZ-IBwmoWp_Zkx4MA3p5fZ8HOohrw02OSS4Lmvv2skLc-rfLX7zpFMnXiceb7WnDNzmUuAfVrYzf43LvBbka6EL1RoaPnQQSl2kqifDrGWfc4WP_iC_bYyXj3PwRIX2rERXJBYCA1OTU_-DL_n4eqPhFf5cqIKzjUtcGDPjconzYVNLfIKGyGkW_yLfY7dd4slPoAHuM0Z" charset="UTF-8"></script><script defer src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <style>
     :root {
@@ -546,12 +546,13 @@
     // Substitua os dados abaixo antes de publicar o site.
     const CONFIG = Object.freeze({
       pricePerNumber: 10.00,
-      pixKey: 'SUA_CHAVE_PIX_AQUI', // CPF/CNPJ, e-mail, telefone ou chave aleatória
+      pixKey: '123e4567-e89b-12d3-a456-426614174000', // CHAVE PIX FAKE/DEMO — substitua pela chave PIX real antes de publicar
       merchantName: 'CHA RIFA',     // até 25 caracteres, sem acentos é mais seguro
       merchantCity: 'RECIFE',       // até 15 caracteres, sem acentos é mais seguro
       transactionPrefix: 'RIFA',
       adminPin: '1234', // ALTERE antes de publicar
       storageKey: 'chaRifaOrdersV1',
+      demoPix: true, // true = usa a chave PIX fake acima; false = exige uma chave PIX real
       // Números indisponíveis podem ser preenchidos pelo backend na versão de produção.
       unavailable: {
         boy: [],
@@ -999,7 +1000,7 @@
     }
 
     function generatePayment() {
-      if (CONFIG.pixKey === 'SUA_CHAVE_PIX_AQUI' || !CONFIG.pixKey.trim()) {
+      if (!CONFIG.pixKey.trim()) {
         showStatus('Configure a chave PIX no bloco CONFIG do arquivo antes de gerar pagamentos.', 'error');
         return;
       }
@@ -1037,7 +1038,9 @@
       });
       els.pixCode.value = payload;
       els.pixBox.classList.add('show');
-      showStatus('Reserva criada como Pendente e QR Code PIX gerado com sucesso.');
+      showStatus(CONFIG.demoPix
+        ? 'QR Code de demonstração gerado. A chave PIX é FAKE e deve ser substituída antes da publicação.'
+        : 'Reserva criada como Pendente e QR Code PIX gerado com sucesso.');
       playSuccessSound();
       burstConfetti();
       els.pixBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
