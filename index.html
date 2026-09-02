@@ -8,7 +8,7 @@
   <title>Chá Rifa Revelação — O Bebê Agora é Outro!</title>
 
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-  <script type="text/javascript" src="https://gc.kes.v2.scr.kaspersky-labs.com/7EA5E9BB-55E1-4C31-9C21-4943DDFED2E4/main.js?attr=OuhyWVVmt7RXtGRT8FaMbAH-JJudoeHdv4ZNP4HaeLjTEWKovF5-b-VTVT5D44IvGK_MlDDkW2aQGSxEAKWwqHyA4O2v782NNtmGonr2PSxpqAGfR5It9DadP8G_GL_TCNrt8gDi-pchrynucTIyYGwKnOFOAShOIg9bhvGjX3Y4sgoE4bvBoFW3Wdohu_7cpnE2L1kZpipcLwOfnVHlprIw6rV12UCXgNsXfSXXKtlTl0W5BUvXQwdFv5ct98p9lPpCGToiMGaCehXTrqEP-MwCIRAaPjR9w7VwYViafMltOSqrHostXw1fyIvIQXk1" charset="UTF-8"></script><script defer src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <style>
     :root {
@@ -252,19 +252,83 @@
       .number { aspect-ratio: 1.35; }
       .rules-grid { grid-template-columns: 1fr; }
     }
+
+
+    /* ===================== ANIMAÇÕES INFANTIS ===================== */
+    body { overflow-x: hidden; }
+    .ambient { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .topbar, main, footer { position: relative; z-index: 1; }
+    .floaty { position: absolute; bottom: -80px; opacity: .72; animation: floatUp linear infinite; filter: drop-shadow(0 5px 8px rgba(30,70,110,.10)); }
+    .floaty.heart { font-size: 30px; }
+    .floaty.star { font-size: 22px; }
+    .floaty.balloon { font-size: 34px; }
+    @keyframes floatUp { from { transform: translate3d(0,0,0) rotate(0deg); } to { transform: translate3d(var(--drift), -115vh, 0) rotate(360deg); } }
+
+    .hero-card { animation: cardIn .8s cubic-bezier(.2,.8,.2,1) both; }
+    .hero-copy > * { animation: softIn .7s ease both; }
+    .hero-copy > *:nth-child(1) { animation-delay: .08s; }
+    .hero-copy > *:nth-child(2) { animation-delay: .16s; }
+    .hero-copy > *:nth-child(3) { animation-delay: .24s; }
+    .hero-copy > *:nth-child(4) { animation-delay: .32s; }
+    @keyframes cardIn { from { opacity:0; transform: translateY(20px) scale(.985); } to { opacity:1; transform:none; } }
+    @keyframes softIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
+
+    .number { position: relative; overflow: hidden; }
+    .number::after { content:""; position:absolute; width: 14px; height: 70px; background:rgba(255,255,255,.52); transform:rotate(28deg) translateX(-80px); transition:transform .45s ease; top:-20px; left:0; }
+    .number:hover::after { transform:rotate(28deg) translateX(95px); }
+    .number.pop { animation: numberPop .34s cubic-bezier(.2,1.5,.4,1) both; }
+    @keyframes numberPop { 0%{transform:scale(.75) rotate(-5deg)} 60%{transform:scale(1.13) rotate(3deg)} 100%{transform:scale(1) rotate(0)} }
+    .gender-btn.active-bounce { animation: bounce .38s ease; }
+    @keyframes bounce { 0%,100%{transform:scale(1)} 45%{transform:scale(1.05)} 70%{transform:scale(.98)} }
+
+    .summary-card { transition: transform .25s ease, box-shadow .25s ease; }
+    .summary-card.pulse { animation: summaryPulse .5s ease; }
+    @keyframes summaryPulse { 0%,100%{transform:none} 45%{transform:translateY(-3px) scale(1.008); box-shadow:0 24px 60px rgba(36,78,119,.20)} }
+    .chip { animation: chipIn .25s ease both; }
+    @keyframes chipIn { from{opacity:0; transform:scale(.7) translateY(4px)} to{opacity:1; transform:none} }
+
+    .pix-box.show { animation: pixReveal .55s cubic-bezier(.2,.9,.2,1) both; }
+    @keyframes pixReveal { from{opacity:0; transform:translateY(18px); max-height:0} to{opacity:1; transform:none; max-height:800px} }
+    .btn-pay:not(:disabled) { animation: payGlow 2.4s ease-in-out infinite; }
+    @keyframes payGlow { 0%,100%{box-shadow:0 12px 24px rgba(27,142,103,.22)} 50%{box-shadow:0 12px 30px rgba(27,142,103,.42)} }
+
+    .sound-toggle { border:1px solid var(--line); background:rgba(255,255,255,.9); color:var(--ink); border-radius:999px; padding:9px 12px; font-weight:850; box-shadow:0 8px 20px rgba(36,78,119,.08); }
+    .sound-toggle[aria-pressed="true"] { background:#edf9f4; color:#14724e; border-color:#bfe9d8; }
+    .topbar-actions { display:flex; align-items:center; gap:6px; }
+
+    .confetti-piece { position:fixed; top:-20px; z-index:100; width:9px; height:14px; pointer-events:none; border-radius:3px; animation: confettiFall var(--duration) cubic-bezier(.15,.65,.25,1) forwards; }
+    @keyframes confettiFall { to { transform:translate3d(var(--x),110vh,0) rotate(var(--rot)); opacity:0; } }
+    .reveal-badge { display:inline-flex; align-items:center; gap:7px; margin-top:12px; padding:7px 11px; border-radius:999px; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.3); font-size:.84rem; font-weight:800; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; transition-duration:.01ms !important; }
+      .ambient { display:none; }
+    }
   </style>
 </head>
 <body>
+  <div class="ambient" aria-hidden="true">
+    <span class="floaty heart" style="left:7%;--drift:28px;animation-duration:15s;animation-delay:-4s">💙</span>
+    <span class="floaty star" style="left:17%;--drift:-18px;animation-duration:19s;animation-delay:-12s">⭐</span>
+    <span class="floaty balloon" style="left:31%;--drift:35px;animation-duration:22s;animation-delay:-8s">🎈</span>
+    <span class="floaty heart" style="left:48%;--drift:-28px;animation-duration:17s;animation-delay:-10s">🩷</span>
+    <span class="floaty star" style="left:64%;--drift:20px;animation-duration:21s;animation-delay:-15s">✨</span>
+    <span class="floaty balloon" style="left:78%;--drift:-35px;animation-duration:20s;animation-delay:-5s">🎈</span>
+    <span class="floaty heart" style="left:91%;--drift:22px;animation-duration:16s;animation-delay:-11s">💗</span>
+  </div>
   <header class="topbar">
     <div class="shell topbar-inner">
       <div class="brand" aria-label="Chá Rifa Revelação">
         <span class="brand-bubbles" aria-hidden="true"><span class="bubble blue"></span><span class="bubble pink"></span></span>
         Chá Rifa Revelação
       </div>
-      <nav aria-label="Navegação principal">
-        <a href="#rifa">Escolher números</a>
-        <a href="#regras">Premiação</a>
-      </nav>
+      <div class="topbar-actions">
+        <button id="soundToggle" class="sound-toggle" type="button" aria-pressed="true" title="Ativar ou desativar sons">🔊 Sons</button>
+        <nav aria-label="Navegação principal">
+          <a href="#rifa">Escolher números</a>
+          <a href="#regras">Premiação</a>
+        </nav>
+      </div>
     </div>
   </header>
 
@@ -280,6 +344,7 @@
               <a class="btn btn-primary" href="#rifa">🎟️ Escolher números</a>
               <a class="btn btn-ghost" href="#regras">🎁 Ver premiação</a>
             </div>
+            <div class="reveal-badge">🎀 Uma brincadeira feita com carinho para a nossa família!</div>
           </div>
           <div class="hero-art"><img src="img/rifa_cha.jpeg" alt="Arte do Chá Rifa Revelação com tema azul e rosa" /></div>
         </div>
@@ -386,7 +451,9 @@
       pixCode: document.querySelector('#pixCode'),
       copyPix: document.querySelector('#copyPix'),
       downloadQr: document.querySelector('#downloadQr'),
-      selectionStatus: document.querySelector('#selectionStatus')
+      selectionStatus: document.querySelector('#selectionStatus'),
+      soundToggle: document.querySelector('#soundToggle'),
+      summaryCard: document.querySelector('.summary-card')
     };
 
     const money = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -397,6 +464,69 @@
       els.selectionStatus.className = `status-bar show ${type}`;
       window.clearTimeout(showStatus.timer);
       showStatus.timer = window.setTimeout(() => { els.selectionStatus.className = 'status-bar'; }, 2800);
+    }
+
+
+    // ---------- Sons leves via Web Audio (sem arquivos externos) ----------
+    let soundEnabled = true;
+    let audioContext = null;
+
+    function getAudioContext() {
+      if (!audioContext) {
+        const Ctx = window.AudioContext || window.webkitAudioContext;
+        if (!Ctx) return null;
+        audioContext = new Ctx();
+      }
+      if (audioContext.state === 'suspended') audioContext.resume();
+      return audioContext;
+    }
+
+    function tone(frequency, duration = .08, type = 'sine', volume = .035, delay = 0) {
+      if (!soundEnabled) return;
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      const start = ctx.currentTime + delay;
+      osc.type = type;
+      osc.frequency.setValueAtTime(frequency, start);
+      gain.gain.setValueAtTime(.0001, start);
+      gain.gain.exponentialRampToValueAtTime(volume, start + .012);
+      gain.gain.exponentialRampToValueAtTime(.0001, start + duration);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start(start);
+      osc.stop(start + duration + .02);
+    }
+
+    function playSelectSound() { tone(660,.055,'sine',.028); tone(880,.075,'sine',.022,.045); }
+    function playGenderSound(gender) {
+      if (gender === 'boy') { tone(392,.09,'triangle',.03); tone(523,.11,'triangle',.026,.07); }
+      else { tone(523,.09,'triangle',.03); tone(659,.11,'triangle',.026,.07); }
+    }
+    function playSuccessSound() { tone(523,.09,'sine',.03); tone(659,.09,'sine',.03,.08); tone(784,.16,'sine',.035,.16); }
+
+    function setSoundEnabled(enabled) {
+      soundEnabled = enabled;
+      els.soundToggle.setAttribute('aria-pressed', String(enabled));
+      els.soundToggle.textContent = enabled ? '🔊 Sons' : '🔇 Silêncio';
+      if (enabled) { getAudioContext(); tone(660,.06,'sine',.02); }
+    }
+
+    function burstConfetti(count = 70) {
+      const pieces = [];
+      for (let i = 0; i < count; i++) {
+        const piece = document.createElement('span');
+        piece.className = 'confetti-piece';
+        piece.style.left = `${35 + Math.random()*30}%`;
+        piece.style.setProperty('--x', `${(Math.random()-.5)*95}vw`);
+        piece.style.setProperty('--rot', `${(Math.random()-.5)*1000}deg`);
+        piece.style.setProperty('--duration', `${1.5 + Math.random()*1.5}s`);
+        piece.style.background = ['#2385e6','#ef4f91','#ffd34d','#7fd3ff','#ff9cc5','#7ed6a7'][Math.floor(Math.random()*6)];
+        piece.style.animationDelay = `${Math.random()*.15}s`;
+        document.body.appendChild(piece);
+        pieces.push(piece);
+      }
+      window.setTimeout(() => pieces.forEach(p => p.remove()), 3400);
     }
 
     function renderGrid() {
@@ -430,15 +560,26 @@
 
     function toggleNumber(value) {
       const selected = state.selected[state.gender];
-      if (selected.has(value)) selected.delete(value); else selected.add(value);
+      const wasSelected = selected.has(value);
+      if (wasSelected) selected.delete(value); else selected.add(value);
       renderGrid();
+      const chosenButton = [...els.grid.querySelectorAll('.number')].find(btn => btn.dataset.number === value);
+      if (!wasSelected && chosenButton) chosenButton.classList.add('pop');
+      if (!wasSelected) playSelectSound();
       renderSummary();
       hidePix();
+      els.summaryCard.classList.remove('pulse');
+      void els.summaryCard.offsetWidth;
+      els.summaryCard.classList.add('pulse');
     }
 
     function setGender(gender) {
       state.gender = gender;
-      els.genderButtons.forEach(btn => btn.setAttribute('aria-pressed', String(btn.dataset.gender === gender)));
+      els.genderButtons.forEach(btn => {
+        btn.setAttribute('aria-pressed', String(btn.dataset.gender === gender));
+        if (btn.dataset.gender === gender) { btn.classList.remove('active-bounce'); void btn.offsetWidth; btn.classList.add('active-bounce'); }
+      });
+      playGenderSound(gender);
       renderGrid();
       renderSummary();
       hidePix();
@@ -559,6 +700,8 @@
       els.pixCode.value = payload;
       els.pixBox.classList.add('show');
       showStatus('QR Code PIX gerado com sucesso.');
+      playSuccessSound();
+      burstConfetti();
       els.pixBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
@@ -591,6 +734,7 @@
     els.generatePix.addEventListener('click', generatePayment);
     els.copyPix.addEventListener('click', copyPix);
     els.downloadQr.addEventListener('click', downloadQr);
+    els.soundToggle.addEventListener('click', () => setSoundEnabled(!soundEnabled));
 
     renderGrid();
     renderSummary();
