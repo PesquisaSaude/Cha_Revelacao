@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Chá Rifa Revelação — escolha Menino ou Menina, selecione seus números e pague via PIX." />
+  <meta name="theme-color" content="#6db8ff" />
+  <title>Chá Rifa Revelação — O Bebê Agora é Outro!</title>
+
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <script type="text/javascript" src="https://gc.kes.v2.scr.kaspersky-labs.com/7EA5E9BB-55E1-4C31-9C21-4943DDFED2E4/main.js?attr=OuhyWVVmt7RXtGRT8FaMbAH-JJudoeHdv4ZNP4HaeLjTEWKovF5-b-VTVT5D44IvGK_MlDDkW2aQGSxEAKWwqHyA4O2v782NNtmGonr2PSxpqAGfR5It9DadP8G_GL_TCNrt8gDi-pchrynucTIyYGwKnOFOAShOIg9bhvGjX3Y4sgoE4bvBoFW3Wdohu_7cpnE2L1kZpipcLwOfnVHlprIw6rV12UCXgNsXfSXXKtlTl0W5BUvXQwdFv5ct98p9lPpCGToiMGaCehXTrqEP-MwCIRAaPjR9w7VwYViafMltOSqrHostXw1fyIvIQXk1" charset="UTF-8"></script><script defer src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <style>
+    :root {
+      --blue: #2385e6;
+      --blue-2: #80c8ff;
+      --blue-soft: #eef8ff;
+      --pink: #ef4f91;
+      --pink-2: #ff9cc5;
+      --pink-soft: #fff0f7;
+      --ink: #17304f;
+      --muted: #67768c;
+      --card: rgba(255,255,255,.90);
+      --line: rgba(23,48,79,.10);
+      --success: #1d9b65;
+      --warning: #d8931b;
+      --shadow: 0 18px 50px rgba(36, 78, 119, .14);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: Inter, ui-rounded, "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(75,176,255,.22), transparent 28%),
+        radial-gradient(circle at 90% 12%, rgba(255,102,164,.22), transparent 30%),
+        linear-gradient(135deg, #f6fbff 0%, #fff8fb 52%, #f5fbff 100%);
+      min-height: 100vh;
+    }
+
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+
+    .shell { width: min(1180px, calc(100% - 28px)); margin: 0 auto; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(16px);
+      background: rgba(255,255,255,.82);
+      border-bottom: 1px solid var(--line);
+    }
+    .topbar-inner {
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 900; }
+    .brand-bubbles { display: flex; gap: 4px; }
+    .bubble { width: 18px; height: 18px; border-radius: 50%; box-shadow: inset 0 -3px 6px rgba(0,0,0,.12); }
+    .bubble.blue { background: var(--blue); }
+    .bubble.pink { background: var(--pink); }
+    .topbar a {
+      text-decoration: none;
+      color: var(--ink);
+      font-weight: 700;
+      padding: 10px 14px;
+      border-radius: 999px;
+    }
+    .topbar a:hover { background: #f4f7fb; }
+
+    .hero { padding: 42px 0 22px; }
+    .hero-card {
+      overflow: hidden;
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      background: linear-gradient(110deg, rgba(41,150,244,.96), rgba(125,195,255,.96) 47%, rgba(255,145,191,.96) 53%, rgba(235,64,137,.96));
+      color: #fff;
+      display: grid;
+      grid-template-columns: 1.08fr .92fr;
+      min-height: 410px;
+      position: relative;
+      isolation: isolate;
+    }
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(6,31,67,.16), transparent 55%);
+      z-index: -1;
+    }
+    .hero-copy { padding: 46px; align-self: center; }
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      background: rgba(255,255,255,.16);
+      border: 1px solid rgba(255,255,255,.30);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: .83rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    h1 { margin: 16px 0 14px; font-size: clamp(2.2rem, 6vw, 4.7rem); line-height: .92; letter-spacing: -.045em; }
+    .hero-copy p { margin: 0; max-width: 620px; font-size: 1.08rem; line-height: 1.6; color: rgba(255,255,255,.94); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+    .btn {
+      border: 0;
+      border-radius: 14px;
+      padding: 13px 18px;
+      font-weight: 850;
+      transition: .2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { color: #184270; background: #fff; box-shadow: 0 8px 20px rgba(20,54,91,.16); }
+    .btn-ghost { color: #fff; border: 1px solid rgba(255,255,255,.35); background: rgba(255,255,255,.10); }
+    .hero-art { min-height: 410px; }
+    .hero-art img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+
+    .layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; padding: 24px 0 54px; align-items: start; }
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.72);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius-xl);
+      padding: 26px;
+    }
+    .card + .card { margin-top: 20px; }
+    .section-title { margin: 0 0 8px; font-size: 1.55rem; letter-spacing: -.025em; }
+    .section-subtitle { margin: 0 0 22px; color: var(--muted); line-height: 1.55; }
+
+    .gender-switch {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 7px;
+      border-radius: 18px;
+      background: #f3f7fb;
+      margin-bottom: 18px;
+    }
+    .gender-btn {
+      border: 0;
+      min-height: 54px;
+      border-radius: 13px;
+      font-weight: 900;
+      color: var(--muted);
+      background: transparent;
+      transition: .2s ease;
+    }
+    .gender-btn[aria-pressed="true"].boy { color: #0f67bd; background: #e4f3ff; box-shadow: inset 0 0 0 2px rgba(35,133,230,.18); }
+    .gender-btn[aria-pressed="true"].girl { color: #c32c70; background: #ffe4f0; box-shadow: inset 0 0 0 2px rgba(239,79,145,.18); }
+
+    .legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: .86rem; color: var(--muted); margin-bottom: 14px; }
+    .legend span { display: inline-flex; gap: 7px; align-items: center; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: #fff; border: 1px solid #b8c7d7; }
+    .dot.selected { background: var(--blue); border-color: var(--blue); }
+    .dot.unavailable { background: #d6dee8; border-color: #d6dee8; }
+
+    .number-grid { display: grid; grid-template-columns: repeat(10, minmax(44px, 1fr)); gap: 8px; }
+    .number {
+      aspect-ratio: 1.12;
+      border: 1px solid #cbd9e8;
+      border-radius: 12px;
+      background: rgba(255,255,255,.90);
+      color: #35536f;
+      font-weight: 900;
+      transition: .16s ease;
+      min-width: 0;
+    }
+    .number:hover:not(:disabled) { transform: translateY(-2px); border-color: #8fb8dc; box-shadow: 0 8px 14px rgba(46,105,160,.10); }
+    .number.selected.boy { color: #fff; background: linear-gradient(180deg, #49a7ff, #1f7fda); border-color: #1f7fda; box-shadow: 0 8px 18px rgba(35,133,230,.27); }
+    .number.selected.girl { color: #fff; background: linear-gradient(180deg, #ff7cb2, #e74388); border-color: #e74388; box-shadow: 0 8px 18px rgba(239,79,145,.25); }
+    .number:disabled { color: #9aa8b8; background: #eef2f6; border-color: #e1e7ee; cursor: not-allowed; text-decoration: line-through; }
+
+    .sticky { position: sticky; top: 92px; }
+    .summary-card { overflow: hidden; padding: 0; }
+    .summary-head { padding: 22px 22px 18px; background: linear-gradient(135deg, #f7fbff, #fff6fa); border-bottom: 1px solid var(--line); }
+    .summary-body { padding: 22px; }
+    .summary-row { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; color: var(--muted); }
+    .summary-row strong { color: var(--ink); text-align: right; }
+    .chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 8px; min-height: 32px; }
+    .chip { background: #f0f5fa; border: 1px solid #dce7f1; border-radius: 999px; padding: 6px 9px; font-size: .82rem; font-weight: 800; }
+    .total { margin: 14px 0 18px; padding: 16px; border-radius: 16px; background: #f7f9fc; display: flex; justify-content: space-between; align-items: baseline; }
+    .total span { color: var(--muted); font-weight: 700; }
+    .total strong { font-size: 1.75rem; }
+    .btn-pay { width: 100%; color: #fff; background: linear-gradient(135deg, #1b8e67, #18ad79); box-shadow: 0 12px 24px rgba(27,142,103,.22); }
+    .btn-pay:disabled { opacity: .45; box-shadow: none; cursor: not-allowed; transform: none; }
+
+    .notice { margin-top: 14px; padding: 12px 13px; border-radius: 13px; background: #fff8e7; color: #8b6416; font-size: .84rem; line-height: 1.45; border: 1px solid #f5dfaa; }
+
+    .pix-box { display: none; margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--line); }
+    .pix-box.show { display: block; }
+    #qrcode { display: grid; place-items: center; min-height: 220px; padding: 12px; background: #fff; border: 1px solid #e5ebf2; border-radius: 18px; }
+    #qrcode img, #qrcode canvas { max-width: 100%; height: auto !important; }
+    .pix-label { margin: 14px 0 6px; font-size: .82rem; color: var(--muted); font-weight: 800; }
+    .pix-code {
+      width: 100%;
+      min-height: 80px;
+      resize: vertical;
+      border: 1px solid #d8e3ee;
+      border-radius: 12px;
+      padding: 10px;
+      color: #39516a;
+      background: #f9fbfd;
+      font-size: .77rem;
+      line-height: 1.35;
+    }
+    .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+    .btn-small { border: 1px solid #dce5ee; background: #fff; color: var(--ink); padding: 10px 12px; border-radius: 12px; font-weight: 800; }
+
+    .rules-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .rule { border: 1px solid var(--line); border-radius: 18px; padding: 18px; background: rgba(255,255,255,.68); }
+    .rule .icon { font-size: 1.6rem; }
+    .rule h3 { margin: 10px 0 8px; }
+    .rule p { margin: 0; color: var(--muted); line-height: 1.55; font-size: .94rem; }
+
+    .status-bar { display: none; margin-top: 14px; padding: 12px 14px; border-radius: 12px; font-weight: 750; font-size: .9rem; }
+    .status-bar.show { display: block; }
+    .status-bar.success { background: #eaf8f2; color: #14724e; border: 1px solid #bfe9d8; }
+    .status-bar.error { background: #fff0f2; color: #a83443; border: 1px solid #f3c6cd; }
+
+    footer { padding: 0 0 38px; text-align: center; color: var(--muted); font-size: .9rem; }
+
+    @media (max-width: 960px) {
+      .hero-card { grid-template-columns: 1fr; }
+      .hero-art { min-height: 300px; }
+      .layout { grid-template-columns: 1fr; }
+      .sticky { position: static; }
+    }
+    @media (max-width: 720px) {
+      .topbar nav { display: none; }
+      .hero { padding-top: 20px; }
+      .hero-copy { padding: 30px 24px; }
+      .hero-art { min-height: 240px; }
+      .card { padding: 20px 14px; border-radius: 22px; }
+      .number-grid { grid-template-columns: repeat(5, 1fr); gap: 8px; }
+      .number { aspect-ratio: 1.35; }
+      .rules-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="shell topbar-inner">
+      <div class="brand" aria-label="Chá Rifa Revelação">
+        <span class="brand-bubbles" aria-hidden="true"><span class="bubble blue"></span><span class="bubble pink"></span></span>
+        Chá Rifa Revelação
+      </div>
+      <nav aria-label="Navegação principal">
+        <a href="#rifa">Escolher números</a>
+        <a href="#regras">Premiação</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="shell">
+        <div class="hero-card">
+          <div class="hero-copy">
+            <span class="eyebrow">💙 O bebê agora é outro! 🩷</span>
+            <h1>Chá Rifa<br>Revelação</h1>
+            <p>Escolha <strong>Menino</strong> ou <strong>Menina</strong>, selecione seus números da sorte de 00 a 99 e gere seu pagamento via PIX em poucos segundos.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#rifa">🎟️ Escolher números</a>
+              <a class="btn btn-ghost" href="#regras">🎁 Ver premiação</a>
+            </div>
+          </div>
+          <div class="hero-art"><img src="img/rifa_cha.jpeg" alt="Arte do Chá Rifa Revelação com tema azul e rosa" /></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="rifa" class="shell layout">
+      <div>
+        <article class="card">
+          <h2 class="section-title">1. Faça sua aposta</h2>
+          <p class="section-subtitle">Escolha o palpite e depois marque um ou mais números. Cada combinação de palpite + número é uma rifa.</p>
+
+          <div class="gender-switch" role="group" aria-label="Escolha o palpite do bebê">
+            <button type="button" class="gender-btn boy" data-gender="boy" aria-pressed="true">💙 MENINO</button>
+            <button type="button" class="gender-btn girl" data-gender="girl" aria-pressed="false">🩷 MENINA</button>
+          </div>
+
+          <div class="legend" aria-label="Legenda dos números">
+            <span><i class="dot"></i> Disponível</span>
+            <span><i class="dot selected"></i> Selecionado</span>
+            <span><i class="dot unavailable"></i> Indisponível</span>
+          </div>
+
+          <div id="numberGrid" class="number-grid" aria-live="polite"></div>
+          <div id="selectionStatus" class="status-bar" role="status"></div>
+        </article>
+
+        <article id="regras" class="card">
+          <h2 class="section-title">🎁 Como funcionará a premiação?</h2>
+          <p class="section-subtitle">A quantidade de prêmios dependerá da quantidade total de rifas vendidas.</p>
+          <div class="rules-grid">
+            <div class="rule"><div class="icon">🏆</div><h3>Quantidade menor</h3><p>Sorteio do prêmio principal de <strong>R$ 200,00</strong>.</p></div>
+            <div class="rule"><div class="icon">🎁</div><h3>Mais da metade</h3><p>Serão realizados <strong>2 sorteios</strong>, sendo o segundo prêmio um brinde especial.</p></div>
+            <div class="rule"><div class="icon">🎉</div><h3>Rifa completa</h3><p>Teremos <strong>3 sorteios e 3 ganhadores</strong>, com um prêmio diferente para cada pessoa.</p></div>
+          </div>
+        </article>
+      </div>
+
+      <aside class="sticky">
+        <section class="card summary-card" aria-label="Resumo da compra">
+          <div class="summary-head">
+            <h2 class="section-title" style="margin-bottom:4px">Resumo</h2>
+            <div style="color:var(--muted);font-size:.9rem">Confira antes de gerar o PIX</div>
+          </div>
+          <div class="summary-body">
+            <div class="summary-row"><span>Palpite</span><strong id="summaryGender">Menino 💙</strong></div>
+            <div class="summary-row"><span>Valor por número</span><strong id="unitPrice">R$ 10,00</strong></div>
+            <div class="summary-row" style="display:block"><span>Números escolhidos</span><div id="selectedChips" class="chips"><span style="color:var(--muted);font-size:.86rem">Nenhum número selecionado</span></div></div>
+            <div class="total"><span>Total</span><strong id="totalPrice">R$ 0,00</strong></div>
+
+            <button id="generatePix" class="btn btn-pay" type="button" disabled>💳 Gerar PIX / QR Code</button>
+            <div class="notice">ℹ️ Este modelo funciona no navegador. Para impedir que duas pessoas comprem o mesmo número ao mesmo tempo, a versão publicada deve usar um backend/banco de dados.</div>
+
+            <div id="pixBox" class="pix-box" aria-live="polite">
+              <div id="qrcode" aria-label="QR Code PIX"></div>
+              <div class="pix-label">PIX Copia e Cola</div>
+              <textarea id="pixCode" class="pix-code" readonly aria-label="Código PIX Copia e Cola"></textarea>
+              <div class="action-grid">
+                <button id="copyPix" class="btn-small" type="button">📋 Copiar PIX</button>
+                <button id="downloadQr" class="btn-small" type="button">⬇️ Salvar QR</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="shell">🍀 Boa sorte a todos! Que venha a grande revelação! 💙🩷</footer>
+
+  <script>
+    'use strict';
+
+    // ===================== CONFIGURAÇÃO =====================
+    // Substitua os dados abaixo antes de publicar o site.
+    const CONFIG = Object.freeze({
+      pricePerNumber: 10.00,
+      pixKey: 'SUA_CHAVE_PIX_AQUI', // CPF/CNPJ, e-mail, telefone ou chave aleatória
+      merchantName: 'CHA RIFA',     // até 25 caracteres, sem acentos é mais seguro
+      merchantCity: 'RECIFE',       // até 15 caracteres, sem acentos é mais seguro
+      transactionPrefix: 'RIFA',
+      // Números indisponíveis podem ser preenchidos pelo backend na versão de produção.
+      unavailable: {
+        boy: [],
+        girl: []
+      }
+    });
+
+    const state = {
+      gender: 'boy',
+      selected: { boy: new Set(), girl: new Set() }
+    };
+
+    const els = {
+      grid: document.querySelector('#numberGrid'),
+      genderButtons: [...document.querySelectorAll('.gender-btn')],
+      summaryGender: document.querySelector('#summaryGender'),
+      selectedChips: document.querySelector('#selectedChips'),
+      totalPrice: document.querySelector('#totalPrice'),
+      unitPrice: document.querySelector('#unitPrice'),
+      generatePix: document.querySelector('#generatePix'),
+      pixBox: document.querySelector('#pixBox'),
+      qrcode: document.querySelector('#qrcode'),
+      pixCode: document.querySelector('#pixCode'),
+      copyPix: document.querySelector('#copyPix'),
+      downloadQr: document.querySelector('#downloadQr'),
+      selectionStatus: document.querySelector('#selectionStatus')
+    };
+
+    const money = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+    const twoDigits = n => String(n).padStart(2, '0');
+
+    function showStatus(message, type = 'success') {
+      els.selectionStatus.textContent = message;
+      els.selectionStatus.className = `status-bar show ${type}`;
+      window.clearTimeout(showStatus.timer);
+      showStatus.timer = window.setTimeout(() => { els.selectionStatus.className = 'status-bar'; }, 2800);
+    }
+
+    function renderGrid() {
+      els.grid.replaceChildren();
+      const selected = state.selected[state.gender];
+      const blocked = new Set(CONFIG.unavailable[state.gender]);
+
+      for (let n = 0; n < 100; n++) {
+        const value = twoDigits(n);
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = `number ${state.gender}`;
+        button.textContent = value;
+        button.dataset.number = value;
+        button.setAttribute('aria-label', `Número ${value}`);
+
+        if (blocked.has(value)) {
+          button.disabled = true;
+          button.title = 'Número indisponível';
+        } else if (selected.has(value)) {
+          button.classList.add('selected');
+          button.setAttribute('aria-pressed', 'true');
+        } else {
+          button.setAttribute('aria-pressed', 'false');
+        }
+
+        button.addEventListener('click', () => toggleNumber(value));
+        els.grid.appendChild(button);
+      }
+    }
+
+    function toggleNumber(value) {
+      const selected = state.selected[state.gender];
+      if (selected.has(value)) selected.delete(value); else selected.add(value);
+      renderGrid();
+      renderSummary();
+      hidePix();
+    }
+
+    function setGender(gender) {
+      state.gender = gender;
+      els.genderButtons.forEach(btn => btn.setAttribute('aria-pressed', String(btn.dataset.gender === gender)));
+      renderGrid();
+      renderSummary();
+      hidePix();
+    }
+
+    function renderSummary() {
+      const selected = [...state.selected[state.gender]].sort();
+      const total = selected.length * CONFIG.pricePerNumber;
+
+      els.summaryGender.textContent = state.gender === 'boy' ? 'Menino 💙' : 'Menina 🩷';
+      els.unitPrice.textContent = money.format(CONFIG.pricePerNumber);
+      els.totalPrice.textContent = money.format(total);
+      els.generatePix.disabled = selected.length === 0;
+
+      els.selectedChips.replaceChildren();
+      if (!selected.length) {
+        const empty = document.createElement('span');
+        empty.style.cssText = 'color:var(--muted);font-size:.86rem';
+        empty.textContent = 'Nenhum número selecionado';
+        els.selectedChips.appendChild(empty);
+      } else {
+        selected.forEach(num => {
+          const chip = document.createElement('span');
+          chip.className = 'chip';
+          chip.textContent = num;
+          els.selectedChips.appendChild(chip);
+        });
+      }
+    }
+
+    function hidePix() {
+      els.pixBox.classList.remove('show');
+      els.qrcode.replaceChildren();
+      els.pixCode.value = '';
+    }
+
+    // ---------- PIX BR Code (EMV) ----------
+    function emv(id, value) {
+      const text = String(value);
+      return `${id}${String(text.length).padStart(2, '0')}${text}`;
+    }
+
+    function crc16(payload) {
+      let crc = 0xFFFF;
+      for (let i = 0; i < payload.length; i++) {
+        crc ^= payload.charCodeAt(i) << 8;
+        for (let bit = 0; bit < 8; bit++) {
+          crc = (crc & 0x8000) ? ((crc << 1) ^ 0x1021) : (crc << 1);
+          crc &= 0xFFFF;
+        }
+      }
+      return crc.toString(16).toUpperCase().padStart(4, '0');
+    }
+
+    function sanitizePixText(value, max) {
+      return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^A-Za-z0-9 .-]/g, '').toUpperCase().slice(0, max);
+    }
+
+    function createPixPayload({ key, name, city, amount, txid, description }) {
+      const gui = emv('00', 'BR.GOV.BCB.PIX');
+      const keyField = emv('01', key.trim());
+      const descField = description ? emv('02', sanitizePixText(description, 60)) : '';
+      const merchantAccount = emv('26', gui + keyField + descField);
+
+      const payload = [
+        emv('00', '01'),
+        merchantAccount,
+        emv('52', '0000'),
+        emv('53', '986'),
+        emv('54', Number(amount).toFixed(2)),
+        emv('58', 'BR'),
+        emv('59', sanitizePixText(name, 25)),
+        emv('60', sanitizePixText(city, 15)),
+        emv('62', emv('05', sanitizePixText(txid || '***', 25))),
+        '6304'
+      ].join('');
+
+      return payload + crc16(payload);
+    }
+
+    function buildTransactionId() {
+      const selected = [...state.selected[state.gender]].sort().join('');
+      const suffix = Math.random().toString(36).slice(2, 7).toUpperCase();
+      return `${CONFIG.transactionPrefix}${state.gender === 'boy' ? 'M' : 'F'}${selected.slice(0, 12)}${suffix}`.slice(0, 25);
+    }
+
+    function generatePayment() {
+      if (CONFIG.pixKey === 'SUA_CHAVE_PIX_AQUI' || !CONFIG.pixKey.trim()) {
+        showStatus('Configure a chave PIX no bloco CONFIG do arquivo antes de gerar pagamentos.', 'error');
+        return;
+      }
+      if (typeof QRCode === 'undefined') {
+        showStatus('Não foi possível carregar o gerador de QR Code. Verifique sua internet.', 'error');
+        return;
+      }
+
+      const selected = [...state.selected[state.gender]].sort();
+      if (!selected.length) return;
+
+      const amount = selected.length * CONFIG.pricePerNumber;
+      const description = `Cha Rifa ${state.gender === 'boy' ? 'Menino' : 'Menina'} nums ${selected.join('-')}`;
+      const payload = createPixPayload({
+        key: CONFIG.pixKey,
+        name: CONFIG.merchantName,
+        city: CONFIG.merchantCity,
+        amount,
+        txid: buildTransactionId(),
+        description
+      });
+
+      els.qrcode.replaceChildren();
+      new QRCode(els.qrcode, {
+        text: payload,
+        width: 220,
+        height: 220,
+        correctLevel: QRCode.CorrectLevel.M
+      });
+      els.pixCode.value = payload;
+      els.pixBox.classList.add('show');
+      showStatus('QR Code PIX gerado com sucesso.');
+      els.pixBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    async function copyPix() {
+      if (!els.pixCode.value) return;
+      try {
+        await navigator.clipboard.writeText(els.pixCode.value);
+        showStatus('Código PIX copiado.');
+      } catch {
+        els.pixCode.select();
+        document.execCommand('copy');
+        showStatus('Código PIX copiado.');
+      }
+    }
+
+    function downloadQr() {
+      const canvas = els.qrcode.querySelector('canvas');
+      const image = els.qrcode.querySelector('img');
+      const src = canvas ? canvas.toDataURL('image/png') : image?.src;
+      if (!src) return;
+      const link = document.createElement('a');
+      link.href = src;
+      link.download = `pix-cha-rifa-${state.gender}-${Date.now()}.png`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
+
+    els.genderButtons.forEach(btn => btn.addEventListener('click', () => setGender(btn.dataset.gender)));
+    els.generatePix.addEventListener('click', generatePayment);
+    els.copyPix.addEventListener('click', copyPix);
+    els.downloadQr.addEventListener('click', downloadQr);
+
+    renderGrid();
+    renderSummary();
+  </script>
+</body>
+</html>
