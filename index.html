@@ -467,49 +467,65 @@
     }
 
 
-    // ---------- Sons leves via Web Audio (sem arquivos externos) ----------
+    // ---------- Sons compatíveis com Chrome ----------
+    // Os efeitos são arquivos WAV locais. Isso evita depender apenas do Web Audio API.
+    // O Chrome exige uma interação do usuário antes de reproduzir áudio; por isso
+    // os sons são disparados somente em cliques/toques reais.
     let soundEnabled = true;
-    let audioContext = null;
+    const audioFiles = {
+      select: new Audio('sounds/select.wav'),
+      boy: new Audio('sounds/boy.wav'),
+      girl: new Audio('sounds/girl.wav'),
+      success: new Audio('sounds/success.wav')
+    };
 
-    function getAudioContext() {
-      if (!audioContext) {
-        const Ctx = window.AudioContext || window.webkitAudioContext;
-        if (!Ctx) return null;
-        audioContext = new Ctx();
-      }
-      if (audioContext.state === 'suspended') audioContext.resume();
-      return audioContext;
+    Object.values(audioFiles).forEach(audio => {
+      audio.preload = 'auto';
+      audio.volume = 0.65;
+    });
+
+    function playSound(name) {
+      if (!soundEnabled || !audioFiles[name]) return;
+      const audio = audioFiles[name];
+      try {
+        audio.pause();
+        audio.currentTime = 0;
+        const promise = audio.play();
+        if (promise && typeof promise.catch === 'function') {
+          promise.catch(() => {
+            // O Chrome pode bloquear a reprodução caso não haja gesto do usuário.
+          });
+        }
+      } catch (_) {}
     }
 
-    function tone(frequency, duration = .08, type = 'sine', volume = .035, delay = 0) {
+    // Pré-carrega os arquivos após o primeiro gesto do usuário.
+    function unlockSounds() {
       if (!soundEnabled) return;
-      const ctx = getAudioContext();
-      if (!ctx) return;
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      const start = ctx.currentTime + delay;
-      osc.type = type;
-      osc.frequency.setValueAtTime(frequency, start);
-      gain.gain.setValueAtTime(.0001, start);
-      gain.gain.exponentialRampToValueAtTime(volume, start + .012);
-      gain.gain.exponentialRampToValueAtTime(.0001, start + duration);
-      osc.connect(gain).connect(ctx.destination);
-      osc.start(start);
-      osc.stop(start + duration + .02);
+      Object.values(audioFiles).forEach(audio => {
+        try {
+          audio.load();
+        } catch (_) {}
+      });
+      document.removeEventListener('pointerdown', unlockSounds);
+      document.removeEventListener('keydown', unlockSounds);
     }
 
-    function playSelectSound() { tone(660,.055,'sine',.028); tone(880,.075,'sine',.022,.045); }
-    function playGenderSound(gender) {
-      if (gender === 'boy') { tone(392,.09,'triangle',.03); tone(523,.11,'triangle',.026,.07); }
-      else { tone(523,.09,'triangle',.03); tone(659,.11,'triangle',.026,.07); }
-    }
-    function playSuccessSound() { tone(523,.09,'sine',.03); tone(659,.09,'sine',.03,.08); tone(784,.16,'sine',.035,.16); }
+    document.addEventListener('pointerdown', unlockSounds, { once: true, passive: true });
+    document.addEventListener('keydown', unlockSounds, { once: true });
+
+    function playSelectSound() { playSound('select'); }
+    function playGenderSound(gender) { playSound(gender === 'boy' ? 'boy' : 'girl'); }
+    function playSuccessSound() { playSound('success'); }
 
     function setSoundEnabled(enabled) {
       soundEnabled = enabled;
       els.soundToggle.setAttribute('aria-pressed', String(enabled));
       els.soundToggle.textContent = enabled ? '🔊 Sons' : '🔇 Silêncio';
-      if (enabled) { getAudioContext(); tone(660,.06,'sine',.02); }
+      if (enabled) {
+        // O próprio clique no botão é um gesto permitido pelo Chrome.
+        playSound('select');
+      }
     }
 
     function burstConfetti(count = 70) {
